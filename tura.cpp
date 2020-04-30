@@ -16,7 +16,7 @@ void CTura::przeprowadz_ture(CZwierze ***tablica, int rozmiar){
     for (int i = 0; i < rozmiar; i++) {
             for (int j = 0; j <rozmiar; j++) {
                 if(tablica[i][j]==NULL){
-                    cout<<"maciek"<<endl;
+                    cout<<"puste"<<endl;
                 }
 
                 else
