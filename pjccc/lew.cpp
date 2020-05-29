@@ -3,7 +3,7 @@
 
 using namespace std;
 
-CLew::CLew(char _plec, int _tura ,int _wiek){
+CLew::CLew(char _plec, int _tura ,int _wiek):CZwierze{
    plec=_plec;
    wiek=_wiek;
    tura_terazniejsza=_tura;
