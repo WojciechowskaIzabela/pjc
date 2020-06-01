@@ -5,16 +5,20 @@
 class CZwierze{
 protected:
     int wiek;
-public:
-    char plec;
-    CZwierze();
-    virtual char sprawdz_plec(CZwierze *zwierze)=0;
-    virtual int sprawdz_wiek(CZwierze *zwierze)=0;
     int tura_terazniejsza;
-    virtual ~CZwierze();
-    virtual void wiek_plus_plus(CZwierze *zwierze)=0;
+    char plec;
+public:
 
+    CZwierze();
+    virtual char sprawdz_plec()=0;
+    virtual int sprawdz_wiek()=0;
+    virtual int sprawdz_ture()=0;
+    virtual ~CZwierze();
+    virtual void wiek_plus_plus()=0;
+    virtual void tura_plus_plus()=0;
     virtual void drukuj();
+    virtual int daj_gatunek()=0;
+
 };
 
 #endif // ZWIERZE_H

@@ -7,6 +7,7 @@
 
 
 class CUzytkownik{
+
 private:
     CTura *turka = NULL ;
 

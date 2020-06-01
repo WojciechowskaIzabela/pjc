@@ -12,7 +12,7 @@ CSymulacja :: CSymulacja (){
 void CSymulacja::przeprowadz_symulacje(){
 
     przerwanie_symulacji=0;
-     turka.tura_obecna=1;
+
 
     while(przerwanie_symulacji==0){
 

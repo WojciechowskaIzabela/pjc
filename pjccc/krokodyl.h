@@ -8,10 +8,13 @@ public:
     CKrokodyl (char = '.', int=0, int=0);
     ~CKrokodyl();
 
-    char sprawdz_plec(CZwierze *zwierze) override;
+    char sprawdz_plec() override;
     void drukuj() override;
-    void wiek_plus_plus(CZwierze *zwierze) override;
-    int sprawdz_wiek(CZwierze *zwierze) override;
+    void wiek_plus_plus() override;
+    int sprawdz_wiek() override;
+    void tura_plus_plus() override;
+    int sprawdz_ture() override;
+     int daj_gatunek() override;
 };
 
 #endif // KROKODYL_H

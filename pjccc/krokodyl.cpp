@@ -18,15 +18,12 @@ CKrokodyl::~CKrokodyl(){
 
 
 
-char CKrokodyl::sprawdz_plec(CZwierze *zwierze){
+char CKrokodyl::sprawdz_plec(){
 
-    int k='k';
-    int m='m';
-    if(zwierze->plec==k)
-        return k;
-
+    if(plec=='k')
+        return 'k';
     else
-        return m;
+        return 'm';
 }
 
 void CKrokodyl::drukuj()
@@ -35,13 +32,29 @@ void CKrokodyl::drukuj()
 }
 
 
-void CKrokodyl ::wiek_plus_plus(CZwierze *zwierze){
-    zwierze->wiek++;
+void CKrokodyl ::wiek_plus_plus(){
+    wiek++;
 }
 
 
-int CKrokodyl::sprawdz_wiek(CZwierze *zwierze){
+int CKrokodyl::sprawdz_wiek(){
      int x;
-     x=zwierze->wiek;
+     x=wiek;
      return x;
+}
+
+
+void CKrokodyl::tura_plus_plus(){
+    tura_terazniejsza++;
+}
+
+
+int CKrokodyl::sprawdz_ture(){
+    int t;
+    t=tura_terazniejsza;
+    return t;
+}
+
+int CKrokodyl::daj_gatunek(){
+    return 'k';
 }

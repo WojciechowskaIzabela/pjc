@@ -6,13 +6,13 @@ using namespace std;
 
 class CSymulacja{
 
-    CTura turka;
-    void stop_symulacji();
+   CTura turka;
+   void stop_symulacji();
    int przerwanie_symulacji;
+   CUzytkownik uz;
 
 public:
 
-    CUzytkownik uz;
     CSymulacja();
     void przeprowadz_symulacje();
     CTura* dajTurka() { return &turka; }

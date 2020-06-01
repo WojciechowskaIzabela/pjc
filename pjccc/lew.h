@@ -9,10 +9,13 @@ public:
     CLew (char = '.', int=0, int=0);
     ~CLew();
 
-    char sprawdz_plec(CZwierze *zwierze) override;
-   void wiek_plus_plus(CZwierze *zwierze) override;
+    char sprawdz_plec() override;
+    void wiek_plus_plus() override;
     void drukuj() override;
-    int sprawdz_wiek(CZwierze *zwierze) override;
+    int sprawdz_wiek() override;
+    void tura_plus_plus() override;
+    int sprawdz_ture() override;
+    int daj_gatunek() override;
 };
 
 #endif // LEW_H

@@ -12,19 +12,18 @@ CLew::CLew(char _plec, int _tura ,int _wiek){
 CLew::~CLew(){
 
     cout<<"Lew zakonczyl swoj zywot"<<endl;
+
 }
 
 
 
 
-char CLew::sprawdz_plec(CZwierze *zwierze){
-    int k='k';
-    int m='m';
-    if(zwierze->plec==k)
-        return k;
+char CLew::sprawdz_plec(){
 
+    if(plec=='k')
+        return 'k';
     else
-        return m;
+        return 'm';
 }
 
 void CLew::drukuj()
@@ -33,13 +32,29 @@ void CLew::drukuj()
 }
 
 
-void CLew ::wiek_plus_plus(CZwierze *zwierze){
-    zwierze->wiek++;
+void CLew ::wiek_plus_plus(){
+    wiek++;
 }
 
 
-int CLew::sprawdz_wiek(CZwierze *zwierze){
+int CLew::sprawdz_wiek(){
      int x;
-     x=zwierze->wiek;
+     x=wiek;
      return x;
+}
+
+
+void CLew::tura_plus_plus(){
+    tura_terazniejsza++;
+}
+
+
+int CLew::sprawdz_ture(){
+    int t;
+    t=tura_terazniejsza;
+    return t;
+}
+
+int CLew::daj_gatunek(){
+    return 'l';
 }

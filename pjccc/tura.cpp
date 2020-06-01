@@ -9,13 +9,6 @@ using namespace std;
 
 CTura :: CTura ()
 {
-    // tego nie powinno być w konstruktorze
-    powitanie();
-
-    // tego też nie powinno być.
-    wczytaj_rozmiar_planszy();
-
-    tablica.resize(rozmiar, std::vector<CZwierze*>(rozmiar, nullptr));
 
 }
 
@@ -34,15 +27,20 @@ CTura::~CTura(){
 void CTura::przeprowadz_ture(){
 
 
-     if(tura_obecna==1)
+     if(tura_obecna==1){
+         wczytaj_rozmiar_planszy();
+
+         tablica.resize(rozmiar, std::vector<CZwierze*>(rozmiar, nullptr));
          zwierzeta_startowe();
+         drukuj_tablice();
+     }
 
-     cout<<endl<<endl<<endl<<" *********************  Przeprowadzam ture ********************* "<<tura_obecna<<endl;
 
+     cout<<endl<<endl<<endl<<" *********************  Przeprowadzam ture  "<<tura_obecna<<" *********************"<<endl;
+    porusz();
+    postarz();
 
-     postarz();
     drukuj_tablice();
-
 
     tura_obecna++;
 
@@ -51,13 +49,13 @@ void CTura::przeprowadz_ture(){
 
 void CTura::wczytaj_rozmiar_planszy(){
 
-    cout<<endl<<" Podaj rozmiar tablicy z przedzialu <5,30>" <<endl;
+    cout<<endl<<" Podaj rozmiar tablicy z przedzialu <8,30>" <<endl;
     cin>>rozmiar;
-    if(rozmiar<5 || rozmiar>30)
+    if(rozmiar<8 || rozmiar>30)
     {
-        while(rozmiar<5 || rozmiar>30)
+        while(rozmiar<8 || rozmiar>30)
         {
-            cout<<endl<<" Podaj wartosc z przedzialu <5,30> ! "<<endl;
+            cout<<endl<<" Podaj wartosc z przedzialu <8,30> ! "<<endl;
             cin>>rozmiar;
         }
     }
@@ -87,7 +85,7 @@ void CTura::zwierzeta_startowe()
 
     srand (time(NULL));
     int x,y;
-    int iloscZwierzat = 8;
+    int iloscZwierzat = 10;
     for (int i=0; i<iloscZwierzat; i++) {
         do {
             x= rand()%(rozmiar);
@@ -105,17 +103,7 @@ void CTura::zwierzeta_startowe()
 
 
 
-void CTura :: powitanie(){
 
-    cout<<endl<<endl<<endl;
-      cout<<"****************  Witaj Użytkowniku na Wyspie!!!  ****************"<<endl<<endl;
-      cout<<" Szybkie zasady : "<<endl<< " Na wyspie znajdują się rózne gatunki zwierząt, które mogą się PORUSZAĆ, ROZMNAŻAC oraz ATAKOWAC"<<endl<<" Wszystko obarczone jest prawdopodobienstwem spełnienia(poruszanie się zas to losowanie ruchu dol/0/gora,lewo/0/prawo) "<<endl;
-       cout<<" Zwierzeta beda oznaczone na tablicy  postaci dwoch liter. "<<endl<<" Pierwsza litera bedzie od gatunku a druga od płci (K/M)"<<endl;
-       cout<<"    Twoje umiejetnosci to: "<<endl<<"   1. Możliwość tworzenia zwierzęcia po skończeniu każdej tury"<<endl;
-       cout<< "   2. Decydowanie kiedy skończyc symulacje"<<endl;
-       cout<<"   3. Rozmiar kwadratowej wyspy"<<endl<<endl<<"Zacznijmy od tego ostatniego!"<<endl;
-
-}
 
 
 void CTura::dodaj_zwierze(){
@@ -147,75 +135,240 @@ void CTura::dodaj_zwierze(){
         }
 
     if (jakie_zwierze=='g' || jakie_zwierze=='G' ){
-            tablica[x][y] = new CGazela;
-            tablica[x][y]->plec=plec_zw;
-            tablica[x][y]->tura_terazniejsza=tura_obecna;
+        tablica[x][y] = new CGazela(plec_zw, tura_obecna);
         }
 
 
         if(jakie_zwierze=='k' || jakie_zwierze=='K' ){
-            tablica[x][y] = new CKrokodyl;
-            tablica[x][y]->plec=plec_zw;
-            tablica[x][y]->tura_terazniejsza=tura_obecna;
+            tablica[x][y] = new CKrokodyl(plec_zw,tura_obecna);
         }
 
 
 
         if(jakie_zwierze=='l' || jakie_zwierze=='L' ){
-            tablica[x][y] = new CLew;
-            tablica[x][y]->plec=plec_zw;
-            tablica[x][y]->tura_terazniejsza=tura_obecna;
+            tablica[x][y] = new CLew(plec_zw, tura_obecna);
         }
 
 }
 
 void CTura::narodziny(char z){
 
+    char plec_zw = (rand() % 2 ? 'k' : 'm');
+    int x,y;
+    do {
+        x= rand()%(rozmiar);
+        y= rand()%(rozmiar);
+    } while (tablica[x][y] != nullptr);
+
+    if (z=='g'){
+        tablica[x][y] = new CGazela(plec_zw, tura_obecna);
+        }
+
+
+    if(z=='k'){
+            tablica[x][y] = new CKrokodyl(plec_zw,tura_obecna);
+        }
+
+
+
+    if(z=='l' ){
+            tablica[x][y] = new CLew(plec_zw, tura_obecna);
+        }
 }
 
 void CTura::postarz(){
 
     for(int i=0;i<rozmiar;i++)
         for(int j=0;j<rozmiar;j++){
-            if(tablica[i][j])
-            cout<<tablica[i][j]->sprawdz_wiek(tablica[i][j])<<endl;
+            if(tablica[i][j]){
+
 
            if (dynamic_cast<CLew*>(tablica[i][j])){
-               if(tablica[i][j]->sprawdz_wiek(tablica[i][j])==5){
+               if(tablica[i][j]->sprawdz_wiek()==5){
                 tablica[i][j]->~CZwierze();
                 tablica[i][j]=nullptr;
                }
-               else
-                   tablica[i][j]->wiek_plus_plus(tablica[i][j]);
+               else{
+                   tablica[i][j]->wiek_plus_plus();
+
+               }
             }
 
-         else if ( dynamic_cast<CGazela*>(tablica[i][j])){
+              else if ( dynamic_cast<CGazela*>(tablica[i][j])){
 
-               if( tablica[i][j]->sprawdz_wiek(tablica[i][j])==7){
+               if( tablica[i][j]->sprawdz_wiek()==7){
                 tablica[i][j]->~CZwierze();
                 tablica[i][j]=nullptr;
                }
-               else
-                   tablica[i][j]->wiek_plus_plus(tablica[i][j]);
+               else{
+                   tablica[i][j]->wiek_plus_plus();
+
+               }
             }
 
 
-           else if ( dynamic_cast<CKrokodyl*>(tablica[i][j])){
+              else if ( dynamic_cast<CKrokodyl*>(tablica[i][j])){
 
-                if(tablica[i][j]->sprawdz_wiek(tablica[i][j])==4){
+                if(tablica[i][j]->sprawdz_wiek()==4){
                 tablica[i][j]->~CZwierze();
                 tablica[i][j]=nullptr;
                 }
-                else
-                    tablica[i][j]->wiek_plus_plus(tablica[i][j]);
+
+                else{
+                      tablica[i][j]->wiek_plus_plus();
+                }
+
+            }
+            }
+        }
+}
+
+
+void CTura::porusz(){
+
+    for(int i=0;i<rozmiar;i++)
+        for(int j=0;j<rozmiar;j++){
+            if(tablica[i][j]){
+
+            if(tablica[i][j]->sprawdz_ture()<=tura_obecna){
+
+                tablica[i][j]->tura_plus_plus();
+
+                 int x,y;
+                 x=-1+rand()%3;
+                 if((i+x)<0 || (i+x)>(rozmiar-1))
+                     while((i+x)<0 || (i+x)>(rozmiar-1))
+                        x=-1+rand()%3;
+                 y=-1+rand()%3;
+                 if((j+y)<0 || (j+y)>(rozmiar-1))
+                     while((j+y)<0 || (j+y)>(rozmiar-1))
+                        y=-1+rand()%3;
+
+                 if(tablica[i+x][j+y] == nullptr){
+                     tablica[i+x][j+y]=tablica[i][j];
+                     tablica[i][j]=nullptr;
+                    // cout<<"ruch"<<endl;
+                 }
+
+                  interakcje(i,j);
             }
 
 
 
+            }
 
-
-
-
-
+        }
 }
+
+
+void CTura::interakcje( int i, int j){
+
+
+        for(int petla_do_jednej_interakcji=0 ;petla_do_jednej_interakcji<1; petla_do_jednej_interakcji++){
+
+            if(tablica[i][j]){
+            if((i+1)<rozmiar   &&   tablica[i+1][j]!=nullptr){
+                if(tablica[i][j]->daj_gatunek() == tablica [i+1][j]->daj_gatunek()){
+                    if(tablica[i][j]->sprawdz_plec() != tablica [i+1][j]->sprawdz_plec()){
+
+                             char gat=tablica[i][j]->daj_gatunek();
+                             narodziny(gat);
+                             cout<<"Narodziny "<<gat<<endl;
+
+                    }
+                }
+                else if (tablica[i][j]->daj_gatunek()=='l'){
+                    tablica[i+1][j]->~CZwierze();
+                     tablica[i+1][j]=nullptr;
+                    cout<<"Lew zjadl"<<endl;
+                    break;
+                }
+                else if (tablica[i][j]->daj_gatunek()=='k'){
+                    tablica[i+1][j]->~CZwierze();
+                    tablica[i+1][j]=nullptr;
+                    cout<<"Krokodyl zjadl"<<endl;
+                    break;
+                }
+            }
+
+            if((j+1)<rozmiar   &&   tablica[i][j+1]!=nullptr){
+                if(tablica[i][j]->daj_gatunek() == tablica [i][j+1]->daj_gatunek()){
+                    if(tablica[i][j]->sprawdz_plec() != tablica [i][j+1]->sprawdz_plec()){
+
+                             char gat=tablica[i][j]->daj_gatunek();
+                             narodziny(gat);
+                              cout<<"Narodziny "<<gat<<endl;
+                              break;
+
+                    }
+                }
+                else if (tablica[i][j]->daj_gatunek()=='l'){
+                    tablica[i][j+1]->~CZwierze();
+                    tablica[i][j+1]=nullptr;
+                    cout<<"Lew zjadl"<<endl;
+                    break;
+                }
+                else if (tablica[i][j]->daj_gatunek()=='k'){
+                    tablica[i][j+1]->~CZwierze();
+                     tablica[i][j+1]=nullptr;
+                    cout<<"Krokodyl zjadl"<<endl;
+                    break;
+                }
+            }
+
+            if((j-1)>(-1)  &&   tablica[i][j-1]!=nullptr){
+                if(tablica[i][j]->daj_gatunek() == tablica [i][j-1]->daj_gatunek()){
+                    if(tablica[i][j]->sprawdz_plec() != tablica [i][j-1]->sprawdz_plec()){
+
+                             char gat=tablica[i][j]->daj_gatunek();
+                              narodziny(gat);
+                             cout<<"Narodziny "<<gat<<endl;
+                              break;
+
+                    }
+                }
+                else if (tablica[i][j]->daj_gatunek()=='l'){
+                    tablica[i][j-1]->~CZwierze();
+                    tablica[i][j-1]=nullptr;
+                    cout<<"Lew zjadl"<<endl;
+                    break;
+                }
+                else if (tablica[i][j]->daj_gatunek()=='k'){
+                    tablica[i][j-1]->~CZwierze();
+                    tablica[i][j-1]=nullptr;
+                    cout<<"Krokodyl zjadl"<<endl;
+                    break;
+                }
+            }
+
+            if((i-1)>(-1)   &&   tablica[i-1][j]!=nullptr){
+                if(tablica[i][j]->daj_gatunek() == tablica [i-1][j]->daj_gatunek()){
+                    if(tablica[i][j]->sprawdz_plec() != tablica [i-1][j]->sprawdz_plec()){
+
+                              char gat=tablica[i][j]->daj_gatunek();
+                              narodziny(gat);
+                              cout<<"Narodziny "<<gat<<endl;
+                              break;
+
+                    }
+                }
+                else if (tablica[i][j]->daj_gatunek()=='l'){
+                    tablica[i-1][j]->~CZwierze();
+                     tablica[i-1][j]=nullptr;
+                    cout<<"Lew zjadl"<<endl;
+                    break;
+                }
+                else if (tablica[i][j]->daj_gatunek()=='k'){
+                    tablica[i-1][j]->~CZwierze();
+                    tablica[i-1][j]=nullptr;
+                    cout<<"Krokodyl zjadl"<<endl;
+                    break;
+                }
+            }
+        }//if zwierze
+
+        }//do fora
 }
+
+
+

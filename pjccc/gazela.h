@@ -8,10 +8,14 @@ public:
     CGazela (char = '.', int=0, int=0);
     ~CGazela();
 
-    char sprawdz_plec(CZwierze *zwierze) override;
+    char sprawdz_plec() override;
     void drukuj() override;
-    void wiek_plus_plus(CZwierze *zwierze) override;
-    int sprawdz_wiek(CZwierze *zwierze) override;
+    void wiek_plus_plus() override;
+    int sprawdz_wiek() override;
+    int sprawdz_ture() override;
+    void tura_plus_plus() override;
+     int daj_gatunek() override;
+
 };
 
 

@@ -13,13 +13,16 @@
 class CZwierze;
 
 class CTura{
+
 private:
+
     std::vector<std::vector<CZwierze*> > tablica;
     int rozmiar;
-    void powitanie();
+    int tura_obecna=1;
+
 
 public:
-    int tura_obecna;
+
     CTura();
     CTura(const CTura&) = delete;
     ~CTura();
@@ -29,8 +32,10 @@ public:
     void zwierzeta_startowe();
     void wczytaj_rozmiar_planszy();
     void dodaj_zwierze();
-    void narodziny(char z);
+    void narodziny(char z); //nie w diagram
     void postarz();
+    void porusz();
+    void interakcje(int i, int j); // d
 };
 
 #endif // TURA_H

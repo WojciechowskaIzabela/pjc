@@ -17,14 +17,12 @@ CGazela::~CGazela(){
 
 
 
-char CGazela::sprawdz_plec(CZwierze *zwierze){
-    int k='k';
-    int m='m';
-    if(zwierze->plec==k)
-        return k;
-
+char CGazela::sprawdz_plec(){
+    if(plec=='k')
+        return 'k';
     else
-        return m;
+        return 'm';
+
 }
 
 void CGazela::drukuj()
@@ -32,12 +30,28 @@ void CGazela::drukuj()
     std::cout << "G" << plec;
 }
 
-void CGazela ::wiek_plus_plus(CZwierze *zwierze){
-    zwierze->wiek++;
+void CGazela ::wiek_plus_plus(){
+   wiek++;
 }
 
-int CGazela::sprawdz_wiek(CZwierze *zwierze){
+int CGazela::sprawdz_wiek(){
      int x;
-     x=zwierze->wiek;
+     x=wiek;
      return x;
+}
+
+
+void CGazela::tura_plus_plus(){
+     tura_terazniejsza++;
+}
+
+int CGazela::sprawdz_ture(){
+    int t;
+    t=tura_terazniejsza;
+    return t;
+}
+
+
+int CGazela::daj_gatunek(){
+    return 'g';
 }
