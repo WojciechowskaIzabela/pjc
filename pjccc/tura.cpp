@@ -35,7 +35,7 @@ void CTura::przeprowadz_ture(){
      cout<<endl<<endl<<endl<<" *********************  Przeprowadzam ture  "<<tura_obecna<<" *********************"<<endl;
     porusz();
     postarz();
-    drukuj_tablice();
+    //drukuj_tablice();
     for(int i=0;i<tablica.size();i++){
         for(int j=0;j<rozmiar;j++){
             if(tablica[i][j]){
